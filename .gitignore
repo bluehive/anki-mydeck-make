@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+
+# ローカル作業・ログ
+terminals/
+mcps/
+import_log.txt
+*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
