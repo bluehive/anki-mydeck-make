@@ -12,6 +12,9 @@ mcps/
 import_log.txt
 *.log
 
+# TOEIC メディア（apkg から再抽出可能）
+assets/toeic/media/
+
 # OS / IDE
 .DS_Store
 Thumbs.db
