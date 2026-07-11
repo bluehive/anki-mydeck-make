@@ -11,7 +11,7 @@ import csv
 from collections import Counter
 
 OUTPUT = "emacs_deck.csv"
-EXPECTED_TOTAL = 77
+EXPECTED_TOTAL = 106
 
 EXPECTED_COUNTS = {
     "基本・移動": 10,
@@ -22,6 +22,9 @@ EXPECTED_COUNTS = {
     "基本・その他": 2,
     "Org-mode": 20,
     "Magit": 16,
+    "Magit/Forge": 9,
+    "YASnippet": 10,
+    "Projectile": 10,
     "Avy": 5,
     "Avy/Embark": 1,
     "Embark": 4,
@@ -118,6 +121,39 @@ CARDS = [
     ("【Paredit】S式を削除(Kill)し、括弧の構造を保持する", "C-k", "Paredit"),
     ("【Paredit】次のS式を現在のリストの中に取り込む(Slurp)", "C-) または C-<right>", "Paredit"),
     ("【Paredit】現在のリストの最後のS式を外に出す(Barf)", "C-} または C-<left>", "Paredit"),
+
+    # ── Magit/Forge（9問） ──
+    ("ForgeでGitHubからPR・Issue情報を同期する", "f f（magit-status内）", "Magit/Forge"),
+    ("現在のブランチからPull Requestを作成する", "C-c C-n", "Magit/Forge"),
+    ("Forgeのtransientメニューを開く", "N", "Magit/Forge"),
+    ("PR一覧を表示する", "M-x forge-list-pullreqs", "Magit/Forge"),
+    ("カーソル位置のPR/Issueの詳細を開く", "RET", "Magit/Forge"),
+    ("そのPR/IssueをGitHubでブラウザ表示", "C-c C-b", "Magit/Forge"),
+    ("そのPR/IssueのURLをコピーする", "C-c C-w", "Magit/Forge"),
+    ("新しいIssueを作成する", "M-x forge-create-issue", "Magit/Forge"),
+    ("Forgeの通知一覧を表示する", "M-x forge-list-notifications", "Magit/Forge"),
+    # ── YASnippet（10問） ──
+    ("スニペットを展開する", "TAB（または C-i）", "YASnippet"),
+    ("新しいスニペットを作成する", "C-c & C-s", "YASnippet"),
+    ("現在のメジャーモード用のスニペットを作成", "C-c & C-n", "YASnippet"),
+    ("スニペットファイルを開く", "C-c & C-v", "YASnippet"),
+    ("スニペットをすべてリロードする", "M-x yas-reload-all", "YASnippet"),
+    ("スニペットテーブルを説明表示", "M-x yas-describe-tables", "YASnippet"),
+    ("スニペット挿入メニューを開く", "M-x yas-insert-snippet", "YASnippet"),
+    ("スニペットファイルを選択して開く", "M-x yas-visit-snippet-file", "YASnippet"),
+    ("yas-minor-mode をトグル", "M-x yas-minor-mode", "YASnippet"),
+    ("スニペットフィールド間を移動", "TAB / C-n / C-p（スニペット内）", "YASnippet"),
+    # ── Projectile（10問） ──
+    ("プロジェクトを切り替える", "C-c p p", "Projectile"),
+    ("プロジェクト内のファイルを開く", "C-c p f", "Projectile"),
+    ("プロジェクト内のディレクトリを開く", "C-c p d", "Projectile"),
+    ("プロジェクト内で検索（ripgrepなど）", "C-c p s r", "Projectile"),
+    ("プロジェクト内のバッファを切り替える", "C-c p b", "Projectile"),
+    ("プロジェクトの全バッファをkillする", "C-c p k", "Projectile"),
+    ("実装ファイルとテストファイルをトグル", "C-c p t", "Projectile"),
+    ("プロジェクトをコンパイルする", "C-c p c", "Projectile"),
+    ("プロジェクトを実行する", "C-c p r", "Projectile"),
+    ("プロジェクトのキャッシュを無効化", "C-c p i", "Projectile"),
 ]
 
 

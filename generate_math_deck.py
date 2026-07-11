@@ -24,7 +24,7 @@ _RAW_CARDS = [
     (r"[$](a^m)^n = {{c1::a^{mn}}}[/$]（$a>0$）", "指数"),
     (r"[$](ab)^n = {{c1::a^n b^n}}[/$]（$a>0,\; b>0$）", "指数"),
     (r"[$]\frac{a^m}{a^n} = {{c1::a^{m-n}}}[/$]（$a>0$）", "指数"),
-    (r"[$]\sqrt[n]{b^m} = {{c1::b^{\frac{m}{n}}}}[/$]（$b>0$。$n$ が偶数なら被開方数 $\geq 0$）", "指数"),
+    (r"[$]\sqrt[n]{b^m} = {{c1::b^{\frac{m}{n} }}}[/$]（$b>0$。$n$ が偶数なら被開方数 $\geq 0$）", "指数"),
     (r"[$]\sqrt{(-6)^2} = {{c1::6}}[/$]（偶数乗根の注意）", "指数"),
     (r"[$]\sqrt[3]{-27} = {{c1::-3}}[/$]（奇数乗根は負の数も取れる）", "指数"),
     (r"[$]a^x = b \;\Leftrightarrow\; x = {{c1::\log_a b}}[/$]（$a>0,\; a \neq 1,\; b>0$）", "対数"),
@@ -189,18 +189,29 @@ def latex_inline_to_plain(expr: str) -> str:
 
 
 def plainize_conditions(text: str) -> str:
-    """メイン数式以外の \\(...\\) をプレーン化（Cloze 表面で空の（）になるのを防ぐ）"""
-    first_open = text.find("\\(")
+    """メイン数式以外の \\(...\\) をプレーン化（Cloze 内の math は保持）"""
+    # Protect cloze regions so their internal math isn't plainized
+    cloze_markers = []
+    def _protect(m):
+        cloze_markers.append(m.group(0))
+        return f"__CLOZE_PROTECT_{len(cloze_markers)-1}__"
+    protected = re.sub(r"\{\{c\d+::.*?}}", _protect, text, flags=re.DOTALL)
+
+    first_open = protected.find("\\(")
     if first_open == -1:
         return text
-    first_close = text.find("\\)", first_open)
+    first_close = protected.find("\\)", first_open)
     if first_close == -1:
         return text
 
-    head = text[: first_close + 2]
-    tail = text[first_close + 2 :]
+    head = protected[: first_close + 2]
+    tail = protected[first_close + 2 :]
     tail = re.sub(r"\\\((.*?)\\\)", lambda m: latex_inline_to_plain(m.group(1)), tail)
-    return head + tail
+    restored = head + tail
+
+    for i, orig in enumerate(cloze_markers):
+        restored = restored.replace(f"__CLOZE_PROTECT_{i}__", orig)
+    return restored
 
 
 def finalize_card_text(text: str) -> str:
